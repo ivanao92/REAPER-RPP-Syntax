@@ -1,0 +1,51 @@
+{
+  "name": "reaper-rpp-syntax",
+  "displayName": "REAPER Project File Syntax",
+  "description": "Syntax highlighting for REAPER project files (.rpp, .rpp-bak)",
+  "version": "1.0.0",
+  "publisher": "ivanao92",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Programming Languages"
+
+  ],
+  "keywords": [
+    "reaper",
+    "rpp",
+    "daw",
+    "audio",
+    "music production"
+  ],
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ivanao92/reaper-rpp-syntax"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "rpp",
+        "aliases": [
+          "REAPER Project",
+          "rpp"
+        ],
+        "extensions": [
+          ".rpp",
+          ".RPP",
+          ".rpp-bak",
+          ".RPP-BAK"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "rpp",
+        "scopeName": "source.rpp",
+        "path": "./syntaxes/rpp.tmLanguage.json"
+      }
+    ]
+  }
+}

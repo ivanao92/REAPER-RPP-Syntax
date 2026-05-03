@@ -1,0 +1,145 @@
+{
+  "name": "REAPER Project",
+  "scopeName": "source.rpp",
+  "fileTypes": [
+    "rpp",
+    "RPP",
+    "rpp-bak",
+    "RPP-BAK"
+  ],
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#block-open" },
+    { "include": "#block-close" },
+    { "include": "#property-line" }
+  ],
+  "repository": {
+
+    "comment": {
+      "comment": "Line comments starting with //",
+      "name": "comment.line.double-slash.rpp",
+      "match": "//.*$"
+    },
+
+    "block-open": {
+      "comment": "Opening tag of a hierarchical block, e.g. <PROJECT or <TRACK",
+      "name": "meta.block.rpp",
+      "begin": "^(\\s*)(<)([A-Za-z_][A-Za-z0-9_]*)",
+      "beginCaptures": {
+        "2": { "name": "punctuation.definition.tag.begin.rpp" },
+        "3": { "name": "entity.name.tag.rpp" }
+      },
+      "end": "$",
+      "patterns": [
+        { "include": "#value-guid" },
+        { "include": "#value-string-double" },
+        { "include": "#value-string-single" },
+        { "include": "#value-string-backtick" },
+        { "include": "#value-number" }
+      ]
+    },
+
+    "block-close": {
+      "comment": "Closing > of a block",
+      "name": "punctuation.definition.tag.end.rpp",
+      "match": "^\\s*>\\s*$"
+    },
+
+    "property-line": {
+      "comment": "A property keyword followed by zero or more values on the same line",
+      "name": "meta.property.rpp",
+      "begin": "^(\\s+)([A-Za-z_][A-Za-z0-9_]*)",
+      "beginCaptures": {
+        "2": { "name": "keyword.other.property.rpp" }
+      },
+      "end": "$",
+      "patterns": [
+        { "include": "#value-guid" },
+        { "include": "#value-string-double" },
+        { "include": "#value-string-single" },
+        { "include": "#value-string-backtick" },
+        { "include": "#value-base64" },
+        { "include": "#value-number" }
+      ]
+    },
+
+    "value-string-double": {
+      "comment": "Double-quoted string value",
+      "name": "string.quoted.double.rpp",
+      "begin": "\"",
+      "end": "\"",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.begin.rpp" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.end.rpp" }
+      },
+      "patterns": [
+        {
+          "name": "constant.character.escape.rpp",
+          "match": "\\\\."
+        }
+      ]
+    },
+
+    "value-string-single": {
+      "comment": "Single-quoted string value",
+      "name": "string.quoted.single.rpp",
+      "begin": "'",
+      "end": "'",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.begin.rpp" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.end.rpp" }
+      },
+      "patterns": [
+        {
+          "name": "constant.character.escape.rpp",
+          "match": "\\\\."
+        }
+      ]
+    },
+
+    "value-string-backtick": {
+      "comment": "Backtick-quoted string value (used in some REAPER fields)",
+      "name": "string.quoted.other.backtick.rpp",
+      "begin": "`",
+      "end": "`",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.begin.rpp" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.end.rpp" }
+      }
+    },
+
+    "value-guid": {
+      "comment": "GUID value enclosed in curly braces, e.g. {A1B2C3D4-...}",
+      "name": "constant.other.guid.rpp",
+      "match": "\\{[A-Fa-f0-9\\-]+\\}"
+    },
+
+    "value-number": {
+      "comment": "Integer or floating-point numeric literal",
+      "patterns": [
+        {
+          "comment": "Floating-point number",
+          "name": "constant.numeric.float.rpp",
+          "match": "(?<![\\w.])-?\\d+\\.\\d+(?:[eE][+-]?\\d+)?(?![\\w.])"
+        },
+        {
+          "comment": "Integer number",
+          "name": "constant.numeric.integer.rpp",
+          "match": "(?<![\\w.])-?\\d+(?![\\w.])"
+        }
+      ]
+    },
+
+    "value-base64": {
+      "comment": "Base64-encoded data blob (long unquoted alphanumeric strings used in REAPER for embedded data)",
+      "name": "string.unquoted.base64.rpp",
+      "match": "(?<= )[A-Za-z0-9+/]{16,}={0,2}(?=\\s|$)"
+    }
+  }
+}
